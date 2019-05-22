@@ -23,20 +23,15 @@ public class Controler {
 
   public void assaultBase(){
     while(handler.baseAlive()){
-      System.out.println("Przechodzi");
       Ship reinforcement = handler.setShip(2, 2);
       if(reinforcement == null){
+        //System.out.println("Przed");
         continue;
       }
+      System.out.println("Za");
       fleet.add(reinforcement);
       Thread assault = new Thread(reinforcement.siege);
       assault.start();
-      try{
-        TimeUnit.SECONDS.sleep(1);
-      }
-      catch(InterruptedException e){
-        //obsługa wyjątku
-      }
     }
   }
 }
