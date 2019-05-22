@@ -17,7 +17,7 @@ public class Controler {
   public Controler(){
     fleet = new ArrayList<>();
     Base defender = new Base(10, 2, "Citadel");
-    WarField place = new WarField(5, 10);
+    WarField place = new WarField(10, 5);
     handler = new WarFieldHandler(place, defender);
   }
 
@@ -32,7 +32,7 @@ public class Controler {
       Thread assault = new Thread(reinforcement.siege);
       assault.start();
       try{
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(1);
       }
       catch(InterruptedException e){
         //obsługa wyjątku

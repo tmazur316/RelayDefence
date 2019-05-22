@@ -35,7 +35,7 @@ public class WarField {
   }
 
   public void saveRow(int number) {
-    free_rows.remove(number);
+    free_rows.remove((Integer)number);
   }
 
   public int saveColumn(int row) {

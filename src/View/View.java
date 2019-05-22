@@ -6,10 +6,9 @@ import java.awt.*;
 
 public class View extends JFrame
 {
-  Controler control;
+  private Controler control;
 
   public View(){
-    setWindow();
     control = new Controler();
   }
 
@@ -30,6 +29,7 @@ public class View extends JFrame
 
   public static void main(String [] args){
     View view = new View();
+    view.setWindow();
   }
 
 }
