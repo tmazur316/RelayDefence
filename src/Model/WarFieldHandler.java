@@ -3,19 +3,21 @@ package Model;
 public class WarFieldHandler {
 
   private WarField space;
+  private Base defender;
 
-  public WarFieldHandler(){
-    space = new WarField(8, 5);
+  public WarFieldHandler(WarField warfield, Base base){
+    space = warfield;
+    defender = base;
   }
 
-  public Ship setShip() {
+  public Ship setShip(int firepower, int armor) {
     int row = space.findRow();
     if(row == -1){
       return null;
     }
     space.saveRow(row);
     int column = space.saveColumn(row);
-    return new Ship(2, row, column, 1);
+    return new Ship(firepower, row, column, armor, defender);
   }
 
   public void removeShip(Ship wreckage){
@@ -24,5 +26,9 @@ public class WarFieldHandler {
 
   public boolean checkTarget(int row, int column){
     return (space.checkRow(row) && space.checkColumn(column));
+  }
+
+  public boolean baseAlive(){
+    return (defender.getHp() > 0);
   }
 }

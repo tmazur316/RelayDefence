@@ -5,6 +5,7 @@ public class Base {
   private final int max_hp;
   private final int firepower;
   private final String name;
+  private final static Object lock = new Object();
 
   public Base(int h, int f, String n) {
     hp = max_hp = h;
@@ -31,6 +32,8 @@ public class Base {
   }
 
   public int getHp() {
-    return hp;
+    synchronized(lock) {
+      return hp;
+    }
   }
 }
