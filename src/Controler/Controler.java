@@ -16,13 +16,14 @@ public class Controler {
 
   public void Controler(){
     fleet = new ArrayList<>();
-    Base defender = new Base(100, 2, "Citadel");
+    Base defender = new Base(10, 2, "Citadel");
     WarField place = new WarField(5, 10);
     handler = new WarFieldHandler(place, defender);
   }
 
   public void assaultBase(){
     while(handler.baseAlive()){
+      System.out.println("Przechodzi");
       Ship reinforcement = handler.setShip(2, 2);
       if(reinforcement == null){
         continue;

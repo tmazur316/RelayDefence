@@ -7,10 +7,10 @@ public class Base {
   private final String name;
   private final static Object lock = new Object();
 
-  public Base(int h, int f, String n) {
-    hp = max_hp = h;
-    firepower = f;
-    name = n;
+  public Base(int hp, int firepower, String name) {
+    this.hp = this.max_hp = hp;
+    this.firepower = firepower;
+    this.name = name;
   }
 
   public void takeDamage(int damage) {

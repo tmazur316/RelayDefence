@@ -1,16 +1,20 @@
 package View;
 
+import Controler.Controler;
 import javax.swing.*;
 import java.awt.*;
 
 public class View extends JFrame
 {
+  Controler control;
 
   public View(){
     setWindow();
+    control = new Controler();
   }
 
   private void setWindow(){
+
     EventQueue.invokeLater(() -> {
       JFrame frame = new JFrame("okno");
       JButton cannon = new JButton("fire");
@@ -19,9 +23,7 @@ public class View extends JFrame
       frame.setLocationRelativeTo(null);
       frame.setResizable(true);
       frame.add(cannon);
-      cannon.addActionListener((actionEvent)->{
-        
-      });
+      cannon.addActionListener((actionEvent)-> control.assaultBase());
       frame.setVisible(true);
     });
   }
