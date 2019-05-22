@@ -14,7 +14,7 @@ public class Controler {
   private WarFieldHandler handler;
   private final static Object lock = new Object();
 
-  public void Controler(){
+  public Controler(){
     fleet = new ArrayList<>();
     Base defender = new Base(10, 2, "Citadel");
     WarField place = new WarField(5, 10);
