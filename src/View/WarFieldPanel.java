@@ -8,6 +8,7 @@ public class WarFieldPanel extends JPanel {
     WarFieldPanel(){
       super(new GridLayout());
       setBackground(new Color(0,0, 70));
+      addFields();
     }
 
     public GridBagConstraints createWarFieldPanel(){
@@ -19,5 +20,10 @@ public class WarFieldPanel extends JPanel {
       c.ipadx = 650;
       c.ipady = 450;
       return c;
+    }
+
+    private void addFields(){
+      for(int i = 0; i < 5; ++i)
+        add(new JButton("button"));
     }
 }
