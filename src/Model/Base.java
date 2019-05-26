@@ -6,6 +6,7 @@ public class Base {
   private final int firepower;
   private final String name;
   private final static Object lock = new Object();
+  private final static Object lock1 = new Object();
 
   public Base(int hp, int firepower, String name) {
     this.hp = this.max_hp = hp;
@@ -14,10 +15,12 @@ public class Base {
   }
 
   public void takeDamage(int damage) {
-    if(hp - damage <= 0) {
+    synchronized(lock){
+      if(hp - damage <= 0) {
       hp = 0;
     }
     else hp -= damage;
+    }
   }
 
   public void regenerate(int health) {

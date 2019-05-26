@@ -49,7 +49,7 @@ public class Ship {
 
   public Runnable siege = () -> {
     while(armor > 0) {
-      try {
+      try{
         TimeUnit.SECONDS.sleep(1);
         this.attack();
       }
