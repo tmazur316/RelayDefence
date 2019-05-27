@@ -6,7 +6,7 @@ import java.awt.*;
 public class WarFieldPanel extends JPanel {
 
     WarFieldPanel(){
-      super(new GridLayout());
+      super(new GridLayout(5, 10));
       setBackground(new Color(0,0, 70));
       addFields();
     }
@@ -23,7 +23,7 @@ public class WarFieldPanel extends JPanel {
     }
 
     private void addFields(){
-      for(int i = 0; i < 5; ++i)
+      for(int i = 0; i < 50; ++i)
         add(new JButton("button"));
     }
 }
