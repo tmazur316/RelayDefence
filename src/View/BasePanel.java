@@ -16,8 +16,7 @@ public class BasePanel extends JPanel {
     c.gridx = 0;
     c.gridwidth = 1;
     c.gridheight = 1;
-    c.ipadx = 150;
-    c.ipady = 450;
+    c. fill = GridBagConstraints.VERTICAL;
     return c;
   }
 }

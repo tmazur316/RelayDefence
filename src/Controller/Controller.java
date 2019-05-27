@@ -1,4 +1,4 @@
-package Controler;
+package Controller;
 
 import Model.Base;
 import Model.Ship;
@@ -17,7 +17,7 @@ public class Controller {
   public Controller(){
     fleet = new ArrayList<>();
     Base defender = new Base(10, 2, "Citadel");
-    WarField place = new WarField(10, 5);
+    WarField place = new WarField(5, 3);
     handler = new WarFieldHandler(place, defender);
   }
 

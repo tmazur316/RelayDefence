@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RelayDefence_v2.iml" filepath="$PROJECT_DIR$/RelayDefence_v2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Resources/images.iml" filepath="$PROJECT_DIR$/Resources/images.iml" />
     </modules>
   </component>
 </project>
