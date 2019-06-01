@@ -41,4 +41,8 @@ public class Controller {
     }
     System.out.println("Za");
   }
+
+  public int getBaseHP(){
+    return handler.baseHP();
+  }
 }

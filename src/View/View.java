@@ -1,10 +1,13 @@
 package View;
 
+import Controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 
@@ -16,13 +19,15 @@ public class View extends JFrame
   private ScorePanel scorePanel;
   private ArrayList<JLabel> enemyPositions;
   private int current_target;
+  private Controller warHandler;
 
 
   public View(){
     super("ME3 Relay Defence");
     space = new WarFieldPanel();
     basePanel = new BasePanel();
-    scorePanel = new ScorePanel();
+    warHandler = new Controller();
+    scorePanel = new ScorePanel(warHandler);
     enemyPositions = new ArrayList<>();
     current_target = 0;
   }
@@ -41,32 +46,11 @@ public class View extends JFrame
       getContentPane().add(basePanel, basePanel.createBasePanel());
 
       scorePanel.setBorder(BorderFactory.createEtchedBorder(1));
-      scorePanel.setPreferredSize(new Dimension(650, 20));
+      scorePanel.setPreferredSize(new Dimension(650, 40));
       getContentPane().add(scorePanel, scorePanel.createScorePanel());
 
-      startMenu();
       addFields();
-
-      space.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-          enemyPositions.get(current_target).setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.WHITE));
-
-          if(e.getKeyCode() == KeyEvent.VK_RIGHT && current_target < enemyPositions.size() - 1) {
-            current_target++;
-          }
-          else if(e.getKeyCode() == KeyEvent.VK_LEFT && current_target > 0){
-            current_target--;
-          }
-          else if(e.getKeyCode() == KeyEvent.VK_UP && current_target - 5 > 0) {
-            current_target = current_target - 5;
-          }
-          else if(e.getKeyCode() == KeyEvent.VK_DOWN && current_target + 5 < enemyPositions.size()) {
-            current_target = current_target + 5;
-          }
-          enemyPositions.get(current_target).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
-        }
-      });
+      startMenu();
 
       pack();
       setLocationRelativeTo(null);
@@ -82,8 +66,15 @@ public class View extends JFrame
     menuBar.add(startUp);
     JMenuItem start = new JMenuItem("start");
     startUp.add(start);
+    start.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
+        space.addKeyListener(new TargetController());
+        space.addKeyListener(new FireController());
+      }
+    });
   }
-
 
   private void addFields() {
     GridBagConstraints c = new GridBagConstraints();
@@ -96,19 +87,46 @@ public class View extends JFrame
         JLabel label = new JLabel();
         label.setPreferredSize(new Dimension(100, 70));
         label.setBorder(BorderFactory.createEtchedBorder(1, new Color(207, 250, 255), new Color(207, 250, 255)));
+        label.setForeground(Color.WHITE);
         label.setFocusable(true);
         space.add(label, c);
         enemyPositions.add(label);
       }
     }
-    enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
   }
 
-  private class KeyboardController extends KeyAdapter{
+  private class TargetController extends KeyAdapter{
+    @Override
+    public void keyPressed(KeyEvent e) {
+      enemyPositions.get(current_target).setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.WHITE));
 
-
+      if(e.getKeyCode() == KeyEvent.VK_RIGHT && current_target < enemyPositions.size() - 1) {
+        current_target++;
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_LEFT && current_target > 0){
+        current_target--;
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_UP && current_target - 5 >= 0) {
+        current_target = current_target - 5;
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_DOWN && current_target + 5 < enemyPositions.size()) {
+        current_target = current_target + 5;
+      }
+      enemyPositions.get(current_target).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
+    }
   }
 
+  private class FireController extends KeyAdapter{
+    @Override
+    public void keyPressed(KeyEvent e) {
+      if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        enemyPositions.get(current_target).setIcon(reaper);
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+        enemyPositions.get(current_target).setIcon(null);
+      }
+    }
+  }
 
   public static void main(String [] args){
     View view = new View();

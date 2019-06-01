@@ -31,4 +31,8 @@ public class WarFieldHandler {
   public boolean baseAlive(){
     return (defender.getHp() > 0);
   }
+
+  public int baseHP(){
+    return defender.getHp();
+  }
 }
