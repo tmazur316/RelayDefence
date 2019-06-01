@@ -3,11 +3,13 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class BasePanel extends JPanel {
+public class BasePanel extends JLabel {
+
+  private final ImageIcon base = new ImageIcon(new ImageIcon(getClass().getResource("/citadel")).getImage().getScaledInstance(150, 280, Image.SCALE_DEFAULT));
 
   BasePanel(){
-    super(new GridLayout());
-    setBackground(new Color(0, 0, 70));
+    super();
+    setIcon(base);
   }
 
   public GridBagConstraints createBasePanel(){
