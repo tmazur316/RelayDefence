@@ -36,4 +36,8 @@ public class WarFieldHandler {
   public int baseHP(){
     return defender.getHp();
   }
+
+  public Base getBase(){
+    return defender;
+  }
 }

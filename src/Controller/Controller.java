@@ -18,7 +18,7 @@ public class Controller {
 
   public Controller(){
     fleet = new ArrayList<>();
-    Base defender = new Base(10000, 2, "Citadel");
+    Base defender = new Base(100, 2, "Citadel");
     WarField place = new WarField(5, 4);
     handler = new WarFieldHandler(place, defender);
     view = new View(this);
@@ -65,6 +65,9 @@ public class Controller {
     return handler.baseHP();
   }
 
+  public Base getBase(){
+    return handler.getBase();
+  }
 
   public static void main(String [] args){
     Controller gameController = new Controller();

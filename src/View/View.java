@@ -1,7 +1,6 @@
 package View;
 
 import Controller.Controller;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +25,7 @@ public class View extends JFrame
     space = new WarFieldPanel();
     basePanel = new BasePanel();
     gameHandler = controller;
-    scorePanel = new ScorePanel(gameHandler);
+    scorePanel = new ScorePanel(gameHandler.getBase());
     enemyPositions = new ArrayList<>();
     current_target = 0;
     setWindow();
@@ -133,14 +132,6 @@ public class View extends JFrame
       else if(e.getKeyCode() == KeyEvent.VK_ENTER){
         enemyPositions.get(current_target).setIcon(null);
       }
-    }
-    @Override
-    public void keyReleased(KeyEvent e){
-      keyPressed(e);
-    }
-    @Override
-    public void keyTyped(KeyEvent e){
-      keyPressed(e);
     }
   }
 }

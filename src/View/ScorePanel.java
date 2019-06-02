@@ -2,31 +2,35 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-
-import Controller.Controller;
+import Model.Base;
 
 public class ScorePanel extends JPanel {
 
-  private Controller warHandler;
+  private Base target;
   private JLabel baseStatus;
 
-  ScorePanel(Controller warHandler){
+  ScorePanel(Base target){
     super(new GridLayout());
+    this.target = target;
     setBackground(Color.BLACK);
-    this.warHandler = warHandler;
     JLabel hpString = new JLabel("HP:");
     hpString.setFont(new Font(null, Font.PLAIN, 25));
     hpString.setForeground(Color.WHITE);
     add(hpString);
     baseStatus = new JLabel();
-    baseStatus.setText(String.valueOf(warHandler.getBaseHP()));
     baseStatus.setFont(new Font(null, Font.PLAIN, 25));
     baseStatus.setForeground(Color.WHITE);
+    baseStatus.setText(String.valueOf(target.getHp()));
     add(baseStatus);
+    target.setDisplayPanel(this);
   }
 
+  public void displayHP(){
+    baseStatus.setText(null);
+    baseStatus.setText(String.valueOf(target.getHp()));
+  }
 
-  public GridBagConstraints createScorePanel(){
+  GridBagConstraints createScorePanel(){
     GridBagConstraints c = new GridBagConstraints();
     c.gridy = 2;
     c.gridx = 0;
