@@ -13,12 +13,11 @@ public class Controller {
 
   private ArrayList<Ship> fleet;
   private WarFieldHandler handler;
-  private final static Object lock = new Object();
   private View view;
 
-  public Controller(){
+  private Controller(){
     fleet = new ArrayList<>();
-    Base defender = new Base(100, 2, "Citadel");
+    Base defender = new Base(100);
     WarField place = new WarField(5, 4);
     handler = new WarFieldHandler(place, defender);
     view = new View(this);

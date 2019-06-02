@@ -2,21 +2,14 @@ package Model;
 
 import View.ScorePanel;
 
-import javax.swing.*;
-
 public class Base {
   private volatile int hp;
   private final int max_hp;
-  private final int firepower;
-  private final String name;
   private final static Object lock = new Object();
-  private final static Object lock1 = new Object();
   private ScorePanel displayPanel;
 
-  public Base(int hp, int firepower, String name) {
+  public Base(int hp) {
     this.hp = this.max_hp = hp;
-    this.firepower = firepower;
-    this.name = name;
     displayPanel = null;
   }
 
@@ -39,10 +32,6 @@ public class Base {
     }
   }
 
-  public void fire(Ship enemy) {
-    enemy.destroyArmor(firepower);
-  }
-
   public int getHp() {
     synchronized(lock) {
       return hp;
@@ -53,3 +42,4 @@ public class Base {
     displayPanel = panel;
   }
 }
+

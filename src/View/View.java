@@ -41,11 +41,11 @@ public class View extends JFrame
       space.setFocusable(true);
 
       basePanel.setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.lightGray));
-      basePanel.setPreferredSize(new Dimension(150, 280));
+      basePanel.setPreferredSize(new Dimension(160, 280));
       getContentPane().add(basePanel, basePanel.createBasePanel());
 
       scorePanel.setBorder(BorderFactory.createEtchedBorder(1));
-      scorePanel.setPreferredSize(new Dimension(650, 40));
+      scorePanel.setPreferredSize(new Dimension(660, 40));
       getContentPane().add(scorePanel, scorePanel.createScorePanel());
 
       addFields();
@@ -99,6 +99,7 @@ public class View extends JFrame
 
   public void clearShip(int position){
     enemyPositions.get(position).setIcon(null);
+    scorePanel.updateScore();
   }
 
   private class TargetController extends KeyAdapter{
