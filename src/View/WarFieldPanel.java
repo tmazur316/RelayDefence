@@ -3,14 +3,14 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class WarFieldPanel extends JPanel {
+class WarFieldPanel extends JPanel {
 
   WarFieldPanel() {
     super(new GridBagLayout());
     setBackground(new Color(0, 0, 70));
   }
 
-  public GridBagConstraints createWarFieldPanel() {
+  GridBagConstraints createWarFieldPanel() {
     GridBagConstraints c = new GridBagConstraints();
     c.gridy = 1;
     c.gridx = 1;

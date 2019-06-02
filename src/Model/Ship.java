@@ -11,7 +11,7 @@ public class Ship {
   private Base target;
   private static final Object lock = new Object();
 
-  public Ship(int gun, int y, int x, int a, Base defender) {
+  Ship(int gun, int y, int x, int a, Base defender) {
     firepower = gun;
     row = y;
     column = x;
@@ -19,7 +19,7 @@ public class Ship {
     target = defender;
   }
 
-  public void attack() {
+  private void attack() {
     synchronized(lock) {
       target.takeDamage(firepower);
     }
@@ -31,20 +31,12 @@ public class Ship {
     else armor -= damage;
   }
 
-  public boolean identifyShip(int y, int x) {
-    return (y == row && x == column);
-  }
-
   public int getRow() {
     return row;
   }
 
   public int getColumn() {
     return column;
-  }
-
-  public int getArmor() {
-    return armor;
   }
 
   public Runnable siege = () -> {

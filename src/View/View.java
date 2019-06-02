@@ -93,6 +93,7 @@ public class View extends JFrame
     }
   }
 
+
   public void drawShip(int position){
     enemyPositions.get(position).setIcon(reaper);
   }
@@ -134,5 +135,9 @@ public class View extends JFrame
         enemyPositions.get(current_target).setIcon(null);
       }
     }
+  }
+
+  public ScorePanel getScorePanel(){
+    return this.scorePanel;
   }
 }

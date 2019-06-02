@@ -9,23 +9,28 @@ public class ScorePanel extends JPanel {
   private Base target;
   private JLabel [] score_panels;
   private int current_score;
+  private int next_wave_time;
+  private int seconds;
+  private int minutes;
 
   ScorePanel(Base target){
     super(new GridLayout());
     this.target = target;
-    current_score = 0;
+    current_score = seconds = minutes = 0;
+    next_wave_time = 30;
     setBackground(Color.BLACK);
     score_panels = new JLabel[4];
     for(int i = 0; i < 4; ++i){
       score_panels[i] = new JLabel();
       score_panels[i].setPreferredSize(new Dimension(165, 40));
       add(score_panels[i]);
-      score_panels[i].setBorder(BorderFactory.createEtchedBorder(1, Color.blue, Color.WHITE));
       score_panels[i].setFont(new Font(null, Font.PLAIN, 25));
       score_panels[i].setForeground(Color.WHITE);
     }
     score_panels[0].setText("HP: " + target.getHp());
     score_panels[1].setText("Score: " + current_score);
+    score_panels[2].setText("Time: " + "00" + ":" + "00");
+    score_panels[3].setText("Wave: 00:" + next_wave_time);
     target.setDisplayPanel(this);
   }
 
@@ -34,10 +39,27 @@ public class ScorePanel extends JPanel {
   }
 
   void updateScore(){
-    current_score = current_score + 10;
+    current_score += 10;
     score_panels[1].setText("Score: " + current_score);
     if(current_score % 50 == 0 )
-      target.regenerate(25);
+      target.regenerate(10);
+  }
+
+  public void displayClock(){
+    seconds++;
+    if(seconds == 60){
+      minutes++;
+      seconds = 0;
+    }
+    score_panels[2].setText("Time: " + minutes + ":" + seconds);
+  }
+
+  public void nextWaveClock(){
+    next_wave_time--;
+    if(next_wave_time < 0){
+      next_wave_time = 30;
+    }
+    score_panels[3].setText("Wave: 00:" + next_wave_time);
   }
 
   GridBagConstraints createScorePanel(){
