@@ -14,10 +14,6 @@ public class ScorePanel extends JPanel {
     super(new GridLayout());
     setBackground(Color.BLACK);
     this.warHandler = warHandler;
-    setBaseStatus();
-  }
-
-  private void setBaseStatus(){
     JLabel hpString = new JLabel("HP:");
     hpString.setFont(new Font(null, Font.PLAIN, 25));
     hpString.setForeground(Color.WHITE);
@@ -28,6 +24,7 @@ public class ScorePanel extends JPanel {
     baseStatus.setForeground(Color.WHITE);
     add(baseStatus);
   }
+
 
   public GridBagConstraints createScorePanel(){
     GridBagConstraints c = new GridBagConstraints();

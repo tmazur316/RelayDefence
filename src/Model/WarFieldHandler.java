@@ -25,8 +25,9 @@ public class WarFieldHandler {
   }
 
   public boolean checkTarget(int row, int column){
-    return (space.checkRow(row) && space.checkColumn(column));
+    return (space.checkRow(row) && space.checkColumn(row, column));
   }
+
 
   public boolean baseAlive(){
     return (defender.getHp() > 0);

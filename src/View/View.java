@@ -5,7 +5,6 @@ import Controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -19,17 +18,18 @@ public class View extends JFrame
   private ScorePanel scorePanel;
   private ArrayList<JLabel> enemyPositions;
   private int current_target;
-  private Controller warHandler;
+  private Controller gameHandler;
 
 
-  public View(){
+  public View(Controller controller){
     super("ME3 Relay Defence");
     space = new WarFieldPanel();
     basePanel = new BasePanel();
-    warHandler = new Controller();
-    scorePanel = new ScorePanel(warHandler);
+    gameHandler = controller;
+    scorePanel = new ScorePanel(gameHandler);
     enemyPositions = new ArrayList<>();
     current_target = 0;
+    setWindow();
   }
 
   private void setWindow(){
@@ -59,20 +59,19 @@ public class View extends JFrame
     });
   }
 
-  private void startMenu(){
+  private void startMenu() {
     JMenuBar menuBar = new JMenuBar();
     setJMenuBar(menuBar);
     JMenu startUp = new JMenu("New game");
     menuBar.add(startUp);
     JMenuItem start = new JMenuItem("start");
     startUp.add(start);
-    start.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
-        space.addKeyListener(new TargetController());
-        space.addKeyListener(new FireController());
-      }
+    start.addActionListener((ActionEvent e) -> {
+      enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
+      space.addKeyListener(new TargetController());
+      space.addKeyListener(new FireController());
+      Thread game = new Thread(gameHandler.assaultBase);
+      game.start();
     });
   }
 
@@ -93,6 +92,14 @@ public class View extends JFrame
         enemyPositions.add(label);
       }
     }
+  }
+
+  public void drawShip(int position){
+    enemyPositions.get(position).setIcon(reaper);
+  }
+
+  public void clearShip(int position){
+    enemyPositions.get(position).setIcon(null);
   }
 
   private class TargetController extends KeyAdapter{
@@ -120,16 +127,20 @@ public class View extends JFrame
     @Override
     public void keyPressed(KeyEvent e) {
       if(e.getKeyCode() == KeyEvent.VK_SPACE){
-        enemyPositions.get(current_target).setIcon(reaper);
+        //enemyPositions.get(current_target).setIcon(reaper);
+        gameHandler.shotFired(current_target);
       }
       else if(e.getKeyCode() == KeyEvent.VK_ENTER){
         enemyPositions.get(current_target).setIcon(null);
       }
     }
-  }
-
-  public static void main(String [] args){
-    View view = new View();
-    view.setWindow();
+    @Override
+    public void keyReleased(KeyEvent e){
+      keyPressed(e);
+    }
+    @Override
+    public void keyTyped(KeyEvent e){
+      keyPressed(e);
+    }
   }
 }

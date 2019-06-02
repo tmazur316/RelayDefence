@@ -31,7 +31,7 @@ public class Ship {
     else armor -= damage;
   }
 
-  public boolean idenitifyShip(int y, int x) {
+  public boolean identifyShip(int y, int x) {
     return (y == row && x == column);
   }
 

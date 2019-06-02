@@ -19,7 +19,7 @@ public class WarField {
       free_rows.add(i);
     }
 
-    positions = new ArrayList<>(width);
+    positions = new ArrayList<>(height);
     for(int i = 0; i < width; i++) {
      positions.add(-1);
     }
@@ -51,11 +51,11 @@ public class WarField {
   }
 
   public boolean checkRow(int number) {
-    return free_rows.contains(number);
+    return !free_rows.contains(number);
   }
 
-  public boolean checkColumn(int number){
-    return (positions.get(number) != -1);
+  public boolean checkColumn(int row, int column){
+    return (positions.get(row) == column);
   }
 
   public int getHeight() {
