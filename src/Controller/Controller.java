@@ -17,16 +17,15 @@ public class Controller {
   private View view;
   private Timer game_timer;
   private Timer nextWaveTimer;
-  private int waveDelay;
+  private static int waveDelay = 1000;
 
   private Controller(){
     fleet = new ArrayList<>();
     Base defender = new Base(100);
     WarField place = new WarField(5, 4);
     handler = new WarFieldHandler(place, defender);
-    game_timer = new Timer(1000, null);
-    nextWaveTimer = new Timer(30000, null);
-    waveDelay = 1;
+    game_timer = null;
+    nextWaveTimer = null;
     view = new View(this);
     handler.getBase().setController(this);
   }
@@ -104,12 +103,14 @@ public class Controller {
   }
 
   private void setWaveTimer(){
-    nextWaveTimer = new Timer(30000, null);
-    nextWaveTimer.addActionListener((ActionEvent actionevent) -> {
-      if(waveDelay > 0.2){
-        waveDelay -= 0.2;
-      }
-    });
+    nextWaveTimer = new Timer(15000, null);
+    nextWaveTimer.addActionListener((ActionEvent actionevent) -> nextWave());
+  }
+
+  private void nextWave() {
+    if(game_timer.getDelay() > 200) {
+      game_timer.setDelay(game_timer.getDelay() - 200);
+    }
   }
 
   public Base getBase(){

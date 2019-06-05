@@ -17,7 +17,7 @@ public class ScorePanel extends JPanel {
     super(new GridLayout());
     this.target = target;
     current_score = seconds = minutes = 0;
-    next_wave_time = 30;
+    next_wave_time = 15;
     setBackground(Color.BLACK);
     score_panels = new JLabel[4];
     for(int i = 0; i < 4; ++i){
@@ -47,7 +47,7 @@ public class ScorePanel extends JPanel {
 
   void resetPanels() {
     current_score = 0;
-    next_wave_time = 30;
+    next_wave_time = 15;
     seconds = 0;
     minutes = 0;
     score_panels[0].setText("HP: " + target.getHp());
@@ -68,7 +68,7 @@ public class ScorePanel extends JPanel {
   public void nextWaveClock(){
     next_wave_time--;
     if(next_wave_time < 0){
-      next_wave_time = 30;
+      next_wave_time = 15;
     }
     score_panels[3].setText("Wave: 00:" + next_wave_time);
   }
