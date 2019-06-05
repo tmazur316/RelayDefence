@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.concurrent.TimeUnit;
+import javax.swing.Timer;
 
 public class Ship {
 
@@ -9,7 +9,7 @@ public class Ship {
   private final int column;
   private int armor;
   private Base target;
-  private static final Object lock = new Object();
+  private Timer nextShotTimer;
 
   Ship(int gun, int y, int x, int a, Base defender) {
     firepower = gun;
@@ -17,16 +17,15 @@ public class Ship {
     column = x;
     armor = a;
     target = defender;
+    nextShotTimer = null;
   }
 
   private void attack() {
-    synchronized(lock) {
       target.takeDamage(firepower);
-    }
   }
 
-   public void destroyArmor(int damage) {
-    if (armor - damage <= 0)
+  public void destroyArmor(int damage) {
+    if (armor - damage < 0)
       armor = 0;
     else armor -= damage;
   }
@@ -39,15 +38,25 @@ public class Ship {
     return column;
   }
 
-  public Runnable siege = () -> {
-    while(armor > 0) {
-      try{
-        TimeUnit.SECONDS.sleep(1);
-        this.attack();
-      }
-      catch (InterruptedException e) {
-        System.out.println("Exception");
-      }
+  private void nextShot(){
+    nextShotTimer.addActionListener((actionEvent) -> this.attack());
+  }
+
+  public void startTimer(){
+    nextShotTimer = new javax.swing.Timer(1000, null);
+    nextShot();
+    nextShotTimer.setInitialDelay(0);
+    nextShotTimer.start();
+  }
+
+  public void stopTimer(){
+    if(nextShotTimer != null){
+      nextShotTimer.stop();
     }
-  };
+    nextShotTimer = null;
+  }
+
+  public Timer getTimer(){
+    return this.nextShotTimer;
+  }
 }

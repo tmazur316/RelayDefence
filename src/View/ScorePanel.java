@@ -45,6 +45,17 @@ public class ScorePanel extends JPanel {
       target.regenerate(10);
   }
 
+  void resetPanels() {
+    current_score = 0;
+    next_wave_time = 30;
+    seconds = 0;
+    minutes = 0;
+    score_panels[0].setText("HP: " + target.getHp());
+    score_panels[1].setText("Score: " + current_score);
+    score_panels[2].setText("Time: " + "00" + ":" + "00");
+    score_panels[3].setText("Wave: 00:" + next_wave_time);
+  }
+
   public void displayClock(){
     seconds++;
     if(seconds == 60){

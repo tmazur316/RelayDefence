@@ -18,6 +18,7 @@ public class View extends JFrame
   private ArrayList<JLabel> enemyPositions;
   private int current_target;
   private Controller gameHandler;
+  private Thread game;
 
 
   public View(Controller controller){
@@ -28,6 +29,7 @@ public class View extends JFrame
     scorePanel = new ScorePanel(gameHandler.getBase());
     enemyPositions = new ArrayList<>();
     current_target = 0;
+    game = null;
     setWindow();
   }
 
@@ -65,13 +67,9 @@ public class View extends JFrame
     menuBar.add(startUp);
     JMenuItem start = new JMenuItem("start");
     startUp.add(start);
-    start.addActionListener((ActionEvent e) -> {
-      enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
-      space.addKeyListener(new TargetController());
-      space.addKeyListener(new FireController());
-      Thread game = new Thread(gameHandler.assaultBase);
-      game.start();
-    });
+    space.addKeyListener(new TargetController());
+    space.addKeyListener(new FireController());
+    start.addActionListener((ActionEvent e) -> startGame());
   }
 
   private void addFields() {
@@ -93,6 +91,36 @@ public class View extends JFrame
     }
   }
 
+  private void startGame(){
+    if(game != null){
+      gameHandler.stopAssault();
+      clearSpace();
+      try{
+        game.join();
+      }
+      catch(InterruptedException e){
+        //
+      }
+      gameHandler.destroyWholeFleet();
+    }
+    if(current_target != 0){
+      enemyPositions.get(current_target).setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.WHITE));
+      current_target = 0;
+    }
+    if(gameHandler.getBase().getHp() != 100){
+      gameHandler.getBase().setHP(100);
+    }
+    scorePanel.resetPanels();
+    enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
+    game = new Thread(gameHandler.assaultBase);
+    game.start();
+  }
+
+  private void clearSpace(){
+    for(JLabel label: enemyPositions){
+      label.setIcon(null);
+    }
+  }
 
   public void drawShip(int position){
     enemyPositions.get(position).setIcon(reaper);
@@ -128,7 +156,6 @@ public class View extends JFrame
     @Override
     public void keyPressed(KeyEvent e) {
       if(e.getKeyCode() == KeyEvent.VK_SPACE){
-        //enemyPositions.get(current_target).setIcon(reaper);
         gameHandler.shotFired(current_target);
       }
       else if(e.getKeyCode() == KeyEvent.VK_ENTER){

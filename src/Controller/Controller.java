@@ -9,7 +9,6 @@ import View.View;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
@@ -29,41 +28,24 @@ public class Controller {
     nextWaveTimer = new Timer(30000, null);
     waveDelay = 1;
     view = new View(this);
+    handler.getBase().setController(this);
   }
 
   public Runnable assaultBase = () -> {
     setTimer();
     setWaveTimer();
+    nextWaveTimer.start();
     game_timer.start();
-    while (handler.baseAlive())
-    {
-      Ship reinforcement = handler.setShip(2, 2);
-      if (reinforcement == null) {
-        continue;
-      }
-      view.drawShip(reinforcement.getRow() * 5 + reinforcement.getColumn());
-      fleet.add(reinforcement);
-      Thread assault = new Thread(reinforcement.siege);
-      assault.start();
-      try {
-        TimeUnit.SECONDS.sleep(waveDelay);
-      } catch (InterruptedException e) {
-        //obsluga wyjatku
-      }
-    }
   };
 
   public void shotFired(int position){
     int row = position/5;
     int column = position % 5;
     if(handler.checkTarget(row, column)){
-      Ship target;
       for(Ship s: fleet){
         if(s.getRow() == row){
-          target = s;
-          target.destroyArmor(2);
-          handler.removeShip(target);
-          fleet.remove(target);
+          s.destroyArmor(2);
+          destroyShip(s);
           view.clearShip(position);
           break;
         }
@@ -71,24 +53,63 @@ public class Controller {
     }
   }
 
+  public void stopAssault(){
+    for(Ship s: fleet){
+      if(s.getTimer() != null)
+      s.stopTimer();
+    }
+    if(game_timer != null) {
+      game_timer.stop();
+    }
+    if(nextWaveTimer != null){
+      nextWaveTimer.stop();
+    }
+    game_timer = null;
+    nextWaveTimer = null;
+  }
+
+  private void assault(){
+    Ship reinforcement = handler.setShip(2, 2);
+    if (reinforcement == null) {
+      return;
+    }
+    view.drawShip(reinforcement.getRow() * 5 + reinforcement.getColumn());
+    fleet.add(reinforcement);
+    reinforcement.startTimer();
+  }
+
+  private void destroyShip(Ship wreckage){
+    wreckage.stopTimer();
+    handler.removeShip(wreckage);
+    fleet.remove(wreckage);
+  }
+
+  public void destroyWholeFleet(){
+    ArrayList<Ship> toRemove = new ArrayList<>(fleet.size());
+    toRemove.addAll(fleet);
+    for(Ship enemy: toRemove){
+      destroyShip(enemy);
+    }
+  }
+
   private void setTimer(){
+    game_timer = new Timer(1000, null);
     game_timer.addActionListener((ActionEvent actionevent) ->
-      view.getScorePanel().displayClock());
+            view.getScorePanel().displayClock());
 
     game_timer.addActionListener((ActionEvent actionevent) ->
-      view.getScorePanel().nextWaveClock());
+            view.getScorePanel().nextWaveClock());
+
+    game_timer.addActionListener((ActionEvent actionevent) -> assault());
   }
 
   private void setWaveTimer(){
+    nextWaveTimer = new Timer(30000, null);
     nextWaveTimer.addActionListener((ActionEvent actionevent) -> {
       if(waveDelay > 0.2){
         waveDelay -= 0.2;
       }
     });
-  }
-
-  public int getBaseHP(){
-    return handler.baseHP();
   }
 
   public Base getBase(){

@@ -28,15 +28,6 @@ public class WarFieldHandler {
     return (space.checkRow(row) && space.checkColumn(row, column));
   }
 
-
-  public boolean baseAlive(){
-    return (defender.getHp() > 0);
-  }
-
-  public int baseHP(){
-    return defender.getHp();
-  }
-
   public Base getBase(){
     return defender;
   }
