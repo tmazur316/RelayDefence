@@ -5,21 +5,19 @@ import java.util.Random;
 
 public class WarField {
 
-  private final int height;
   private final int width;
   private ArrayList<Integer> free_rows;
   private ArrayList<Integer> positions;
 
   public WarField(int x, int y) {
-    height = y;
     width = x;
 
-    free_rows = new ArrayList<>(height);
-    for(int i = 0; i < height; i++) {
+    free_rows = new ArrayList<>(y);
+    for(int i = 0; i < y; i++) {
       free_rows.add(i);
     }
 
-    positions = new ArrayList<>(height);
+    positions = new ArrayList<>(y);
     for(int i = 0; i < width; i++) {
      positions.add(-1);
     }

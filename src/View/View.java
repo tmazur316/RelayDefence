@@ -13,7 +13,7 @@ public class View extends JFrame
 {
   private final ImageIcon reaper = new ImageIcon(new ImageIcon(getClass().getResource("/REAPER.png")).getImage().getScaledInstance(100, 75, Image.SCALE_DEFAULT));
   private WarFieldPanel space;
-  private BasePanel basePanel;
+  private JLabel basePanel;
   private ScorePanel scorePanel;
   private ArrayList<JLabel> enemyPositions;
   private int current_target;
@@ -24,7 +24,7 @@ public class View extends JFrame
   public View(Controller controller){
     super("ME3 Relay Defence");
     space = new WarFieldPanel();
-    basePanel = new BasePanel();
+    basePanel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/citadel")).getImage().getScaledInstance(150, 280, Image.SCALE_DEFAULT)));
     gameHandler = controller;
     scorePanel = new ScorePanel(gameHandler.getBase());
     enemyPositions = new ArrayList<>();
@@ -44,7 +44,7 @@ public class View extends JFrame
 
       basePanel.setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.lightGray));
       basePanel.setPreferredSize(new Dimension(160, 280));
-      getContentPane().add(basePanel, basePanel.createBasePanel());
+      getContentPane().add(basePanel, setBasePanel());
 
       scorePanel.setBorder(BorderFactory.createEtchedBorder(1));
       scorePanel.setPreferredSize(new Dimension(660, 40));
@@ -58,6 +58,15 @@ public class View extends JFrame
       setResizable(false);
       setVisible(true);
     });
+  }
+  private GridBagConstraints setBasePanel(){
+    GridBagConstraints c = new GridBagConstraints();
+    c.gridy = 1;
+    c.gridx = 0;
+    c.gridwidth = 1;
+    c.gridheight = 1;
+    c. fill = GridBagConstraints.VERTICAL;
+    return c;
   }
 
   private void startMenu() {
@@ -99,7 +108,7 @@ public class View extends JFrame
         game.join();
       }
       catch(InterruptedException e){
-        //
+        basePanel.setText("Runnig exception. Close the program and open it again");
       }
       gameHandler.destroyWholeFleet();
     }
@@ -107,8 +116,8 @@ public class View extends JFrame
       enemyPositions.get(current_target).setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.WHITE));
       current_target = 0;
     }
-    if(gameHandler.getBase().getHp() != 100){
-      gameHandler.getBase().setHP(100);
+    if(gameHandler.getBase().getHp() != 500){
+      gameHandler.getBase().setHP(500);
     }
     scorePanel.resetPanels();
     enemyPositions.get(0).setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));

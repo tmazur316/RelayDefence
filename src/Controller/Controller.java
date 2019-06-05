@@ -17,11 +17,10 @@ public class Controller {
   private View view;
   private Timer game_timer;
   private Timer nextWaveTimer;
-  private static int waveDelay = 1000;
 
   private Controller(){
     fleet = new ArrayList<>();
-    Base defender = new Base(100);
+    Base defender = new Base(500);
     WarField place = new WarField(5, 4);
     handler = new WarFieldHandler(place, defender);
     game_timer = null;
@@ -108,8 +107,8 @@ public class Controller {
   }
 
   private void nextWave() {
-    if(game_timer.getDelay() > 200) {
-      game_timer.setDelay(game_timer.getDelay() - 200);
+    if(game_timer.getDelay() > 100) {
+      game_timer.setDelay(game_timer.getDelay() - 100);
     }
   }
 
@@ -118,6 +117,6 @@ public class Controller {
   }
 
   public static void main(String [] args){
-    Controller gameController = new Controller();
+    new Controller();
   }
 }
