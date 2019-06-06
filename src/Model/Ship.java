@@ -11,10 +11,10 @@ public class Ship {
   private final Base target;
   private Timer nextShotTimer;
 
-  public Ship(int gun, int y, int x, int armor, Base defender) {
-    firepower = gun;
-    row = y;
-    column = x;
+  public Ship(int firepower, int row, int column, int armor, Base defender) {
+    this.firepower = firepower;
+    this.row = row;
+    this.column = column;
     this.armor = armor;
     target = defender;
     nextShotTimer = null;
@@ -44,8 +44,8 @@ public class Ship {
 
   public void startTimer(){
     nextShotTimer = new javax.swing.Timer(1000, null);
-    nextShot();
     nextShotTimer.setInitialDelay(0);
+    nextShot();
     nextShotTimer.start();
   }
 

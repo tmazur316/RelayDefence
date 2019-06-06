@@ -61,8 +61,18 @@ public class ModelTests extends TestCase {
   }
 
   public void testGettingShipColumn() {
-    Ship enemy = new Ship(2, 2, 3, 2, mock(Base.class));
-    Assert.assertEquals(3, enemy.getColumn());
+    Ship testEnemy = new Ship(2, 2, 3, 2, mock(Base.class));
+    Assert.assertEquals(3, testEnemy.getColumn());
+  }
+
+  public void testShipTimer() {
+    Base testBase = new Base(100);
+    Ship testEnemy = new Ship(2, 2, 3, 2, testBase);
+    testEnemy.startTimer();
+    Assert.assertNotNull(testEnemy.getTimer());
+    Assert.assertNotNull(testEnemy.getTimer().getActionListeners());
+    testEnemy.stopTimer();
+    Assert.assertNull(testEnemy.getTimer());
   }
 
   public void testRowFindingWhenNoRowsAreFree() {
