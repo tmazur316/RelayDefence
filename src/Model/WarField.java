@@ -6,8 +6,8 @@ import java.util.Random;
 public class WarField {
 
   private final int width;
-  private ArrayList<Integer> free_rows;
-  private ArrayList<Integer> positions;
+  private final ArrayList<Integer> free_rows;
+  private final ArrayList<Integer> positions;
 
   public WarField(int x, int y) {
     width = x;

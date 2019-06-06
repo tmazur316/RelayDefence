@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class View extends JFrame
 {
   private final ImageIcon reaper = new ImageIcon(new ImageIcon(getClass().getResource("/REAPER.png")).getImage().getScaledInstance(100, 75, Image.SCALE_DEFAULT));
-  private WarFieldPanel space;
-  private JLabel basePanel;
-  private ScorePanel scorePanel;
-  private ArrayList<JLabel> enemyPositions;
+  private final WarFieldPanel space;
+  private final JLabel basePanel;
+  private final ScorePanel scorePanel;
+  private final ArrayList<JLabel> enemyPositions;
   private int current_target;
-  private Controller gameHandler;
+  private final Controller gameHandler;
   private Thread game;
 
 
@@ -108,7 +108,7 @@ public class View extends JFrame
         game.join();
       }
       catch(InterruptedException e){
-        basePanel.setText("Runnig exception. Close the program and open it again");
+        basePanel.setText("Running exception. Close the program and open it again");
       }
       gameHandler.destroyWholeFleet();
     }

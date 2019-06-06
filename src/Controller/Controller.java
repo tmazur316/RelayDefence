@@ -12,11 +12,12 @@ import java.util.ArrayList;
 
 public class Controller {
 
-  private ArrayList<Ship> fleet;
-  private WarFieldHandler handler;
-  private View view;
+  private final ArrayList<Ship> fleet;
+  private final WarFieldHandler handler;
+  private final View view;
   private Timer game_timer;
   private Timer nextWaveTimer;
+  private Timer clockTimer;
 
   private Controller(){
     fleet = new ArrayList<>();
@@ -25,15 +26,18 @@ public class Controller {
     handler = new WarFieldHandler(place, defender);
     game_timer = null;
     nextWaveTimer = null;
+    clockTimer = null;
     view = new View(this);
     handler.getBase().setController(this);
   }
 
-  public Runnable assaultBase = () -> {
+  public final Runnable assaultBase = () -> {
     setTimer();
+    setClockTimer();
     setWaveTimer();
     nextWaveTimer.start();
     game_timer.start();
+    clockTimer.start();
   };
 
   public void shotFired(int position){
@@ -62,8 +66,12 @@ public class Controller {
     if(nextWaveTimer != null){
       nextWaveTimer.stop();
     }
+    if(clockTimer != null){
+      clockTimer.stop();
+    }
     game_timer = null;
     nextWaveTimer = null;
+    clockTimer = null;
   }
 
   private void assault(){
@@ -90,14 +98,17 @@ public class Controller {
     }
   }
 
-  private void setTimer(){
-    game_timer = new Timer(1000, null);
-    game_timer.addActionListener((ActionEvent actionevent) ->
+  private void setClockTimer(){
+    clockTimer = new Timer(1000, null);
+    clockTimer.addActionListener((ActionEvent actionevent) ->
             view.getScorePanel().displayClock());
 
-    game_timer.addActionListener((ActionEvent actionevent) ->
+    clockTimer.addActionListener((ActionEvent actionevent) ->
             view.getScorePanel().nextWaveClock());
+  }
 
+  private void setTimer(){
+    game_timer = new Timer(1000, null);
     game_timer.addActionListener((ActionEvent actionevent) -> assault());
   }
 

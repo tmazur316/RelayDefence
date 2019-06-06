@@ -2,8 +2,8 @@ package Model;
 
 public class WarFieldHandler {
 
-  private WarField space;
-  private Base defender;
+  private final WarField space;
+  private final Base defender;
 
   public WarFieldHandler(WarField warfield, Base base){
     space = warfield;

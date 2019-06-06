@@ -6,8 +6,8 @@ import Model.Base;
 
 public class ScorePanel extends JPanel {
 
-  private Base target;
-  private JLabel [] score_panels;
+  private final Base target;
+  private final JLabel [] score_panels;
   private int current_score;
   private int next_wave_time;
   private int seconds;

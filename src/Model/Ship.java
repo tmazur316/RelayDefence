@@ -4,11 +4,11 @@ import javax.swing.Timer;
 
 public class Ship {
 
-  private int firepower;
+  private final int firepower;
   private final int row;
   private final int column;
   private int armor;
-  private Base target;
+  private final Base target;
   private Timer nextShotTimer;
 
   Ship(int gun, int y, int x, int a, Base defender) {
