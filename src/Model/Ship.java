@@ -11,11 +11,11 @@ public class Ship {
   private final Base target;
   private Timer nextShotTimer;
 
-  Ship(int gun, int y, int x, int a, Base defender) {
+  public Ship(int gun, int y, int x, int armor, Base defender) {
     firepower = gun;
     row = y;
     column = x;
-    armor = a;
+    this.armor = armor;
     target = defender;
     nextShotTimer = null;
   }
@@ -58,5 +58,13 @@ public class Ship {
 
   public Timer getTimer(){
     return this.nextShotTimer;
+  }
+
+  public int getArmor(){
+    return this.armor;
+  }
+
+  public int getFirepower(){
+    return this.firepower;
   }
 }

@@ -23,7 +23,7 @@ public class WarField {
     }
   }
 
-  int findRow() {
+  public int findRow() {
     if(free_rows.size() == 0) {
       return -1;
     }
@@ -32,27 +32,27 @@ public class WarField {
     return free_rows.get(new_row);
   }
 
-  void saveRow(int number) {
+  public void saveRow(int number) {
     free_rows.remove((Integer)number);
   }
 
-  int saveColumn(int row) {
+  public int saveColumn(int row) {
     Random rand = new Random();
     int new_column = rand.nextInt(1000) % width;
     positions.set(row, new_column);
     return new_column;
   }
 
-  void returnRow(int number) {
+  public void returnRow(int number) {
     free_rows.add(number);
     positions.set(number, -1);
   }
 
-  boolean checkRow(int number) {
+  public boolean checkRow(int number) {
     return !free_rows.contains(number);
   }
 
-  boolean checkColumn(int row, int column){
+  public boolean checkColumn(int row, int column){
     return (positions.get(row) == column);
   }
 }

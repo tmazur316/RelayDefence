@@ -16,14 +16,16 @@ public class Base {
     controller = null;
   }
 
-  void takeDamage(int damage) {
-    synchronized(lock){
+  public void takeDamage(int damage) {
+    synchronized(lock) {
       if(hp - damage <= 0) {
       hp = 0;
       controller.stopAssault();
     }
-    else hp -= damage;
-    displayPanel.displayHP();
+      else{
+        hp -= damage;
+      }
+      displayPanel.displayHP();
     }
   }
 
@@ -31,7 +33,10 @@ public class Base {
     synchronized (lock) {
       if (hp + health >= max_hp) {
         hp = max_hp;
-      } else hp += health;
+      }
+      else {
+        hp += health;
+      }
       displayPanel.displayHP();
     }
   }
