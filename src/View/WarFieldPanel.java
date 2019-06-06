@@ -13,6 +13,7 @@ class WarFieldPanel extends JPanel {
   GridBagConstraints createWarFieldPanel() {
     GridBagConstraints c = new GridBagConstraints();
     c.gridy = 1;
+    int a;
     c.gridx = 1;
     c.gridwidth = 1;
     c.gridheight = 1;
