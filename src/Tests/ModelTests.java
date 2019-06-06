@@ -49,6 +49,14 @@ public class ModelTests extends TestCase {
     Assert.assertEquals(100, testBase.getHp());
   }
 
+  public void testBaseRegeneratingToFullHP() {
+    Base testBase = new Base(100);
+    testBase.setDisplayPanel(mock(ScorePanel.class));
+    testBase.setHP(90);
+    testBase.regenerate(1000);
+    Assert.assertEquals(100, testBase.getHp());
+  }
+
   public void testShipTakingDmg() {
     Ship enemy = new Ship(2, 2, 2, 2, mock(Base.class));
     enemy.destroyArmor(2);

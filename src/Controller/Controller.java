@@ -19,7 +19,7 @@ public class Controller {
   private Timer nextWaveTimer;
   private Timer clockTimer;
 
-  private Controller(){
+  public Controller(View view){
     fleet = new ArrayList<>();
     Base defender = new Base(500);
     WarField place = new WarField(5, 4);
@@ -27,18 +27,11 @@ public class Controller {
     game_timer = null;
     nextWaveTimer = null;
     clockTimer = null;
-    view = new View(this);
+    this.view = view;
     handler.getBase().setController(this);
   }
 
-  public final Runnable assaultBase = () -> {
-    setTimer();
-    setClockTimer();
-    setWaveTimer();
-    nextWaveTimer.start();
-    game_timer.start();
-    clockTimer.start();
-  };
+  public final Runnable assaultBase = this::startTimers;
 
   public void shotFired(int position){
     int row = position/5;
@@ -127,7 +120,20 @@ public class Controller {
     return handler.getBase();
   }
 
-  public static void main(String [] args){
-    new Controller();
+  public Timer[] getTimers(){
+    Timer [] controllerTimers = new Timer[3];
+    controllerTimers[0] = game_timer;
+    controllerTimers[1] = nextWaveTimer;
+    controllerTimers[2] = clockTimer;
+    return controllerTimers;
+  }
+
+  public void startTimers(){
+    setTimer();
+    setClockTimer();
+    setWaveTimer();
+    nextWaveTimer.start();
+    game_timer.start();
+    clockTimer.start();
   }
 }

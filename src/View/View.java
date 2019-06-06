@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class View extends JFrame
 {
   private final ImageIcon reaper = new ImageIcon(new ImageIcon(getClass().getResource("/REAPER.png")).getImage().getScaledInstance(100, 75, Image.SCALE_DEFAULT));
-  private final WarFieldPanel space;
+  private final JPanel space;
   private final JLabel basePanel;
   private final ScorePanel scorePanel;
   private final ArrayList<JLabel> enemyPositions;
@@ -21,11 +21,11 @@ public class View extends JFrame
   private Thread game;
 
 
-  public View(Controller controller){
+  public View(){
     super("ME3 Relay Defence");
-    space = new WarFieldPanel();
+    space = new JPanel(new GridBagLayout());
     basePanel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/citadel")).getImage().getScaledInstance(150, 280, Image.SCALE_DEFAULT)));
-    gameHandler = controller;
+    gameHandler = new Controller(this);
     scorePanel = new ScorePanel(gameHandler.getBase());
     enemyPositions = new ArrayList<>();
     current_target = 0;
@@ -39,7 +39,8 @@ public class View extends JFrame
       setLayout(new GridBagLayout());
 
       space.setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.lightGray));
-      getContentPane().add(space, space.createWarFieldPanel());
+      getContentPane().add(space, setWarFieldPanel());
+      space.setBackground(new Color(0, 0, 70));
       space.setFocusable(true);
 
       basePanel.setBorder(BorderFactory.createEtchedBorder(1, Color.WHITE, Color.lightGray));
@@ -59,6 +60,7 @@ public class View extends JFrame
       setVisible(true);
     });
   }
+
   private GridBagConstraints setBasePanel(){
     GridBagConstraints c = new GridBagConstraints();
     c.gridy = 1;
@@ -66,6 +68,16 @@ public class View extends JFrame
     c.gridwidth = 1;
     c.gridheight = 1;
     c. fill = GridBagConstraints.VERTICAL;
+    return c;
+  }
+
+  private GridBagConstraints setWarFieldPanel(){
+    GridBagConstraints c = new GridBagConstraints();
+    c.gridy = 1;
+    c.gridx = 1;
+    c.gridwidth = 1;
+    c.gridheight = 1;
+    c.fill = GridBagConstraints.BOTH;
     return c;
   }
 
